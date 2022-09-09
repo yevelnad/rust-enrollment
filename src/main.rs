@@ -1,4 +1,4 @@
-use enrollment::app::{subject::SubjectList, page::Pages};
+use enrollment::app::{subject::SubjectList, adminpage::AdminPages, mainpage::MainPage};
 
 
 
@@ -6,13 +6,14 @@ extern crate enrollment;
 
 fn main() {
     let mut subject_list = SubjectList::new();
-    let mut session = "login";
+    let mut session = "main";
     loop{
         match session{
-            "login" => {
 
-                let user_input = Pages::login().inputs();
-                if login(user_input){
+            "admin login" => {
+
+                let user_input = MainPage::login().inputs();
+                if login_admin(user_input){
                     session = "show subjects";
                 }
                 else{
@@ -20,8 +21,9 @@ fn main() {
                 }
 
             },
+
             "show subjects" => {
-                let user_input = Pages::show_subjects(&subject_list.subjects);
+                let user_input = AdminPages::show_subjects(&subject_list.subjects);
                 
                 match user_input {
                     1 => {
@@ -31,18 +33,45 @@ fn main() {
                     2 => {
                         println!("YOU HAVE LOGOUT!!!");
                         println!("BACK TO LOGIN PAGE");
-                        session = "login";
+                        session = "main";
                     },
                     _ =>{
                         println!("wrong choice me amigos!");
                     }
                 }
             },
+
             "add subject" => {
-                    let subject = Pages::add_subjects();
+                    let subject = AdminPages::add_subjects();
                     subject_list.add_subject(subject);
                     session = "show subjects";
             },
+            "staff login" => {
+                let user_input = MainPage::login().inputs();
+                if login_staff(user_input){
+                    session = "show students";
+                }
+                else{
+                    println!("Wrong username or password");
+                }
+            },
+            "main" => {
+                let user_input = MainPage::mainpage();
+                match user_input{
+                    1 => {
+                        session = "admin login";
+                        println!("You have selected to login as admin.");
+
+                    },
+                    2 => {
+                        session = "staff login";
+                        println!("You have selected to login as staff.")
+                    },
+                    _ => {
+                        println!("Wrong choice me amigos");
+                    }
+                }
+            }
             _ => {
                 println!("Page not found");
                 break;
@@ -52,7 +81,7 @@ fn main() {
     }
 }
 
-fn login(inputs: Vec<String>)->bool{
+fn login_admin(inputs: Vec<String>)->bool{
     let username = inputs[0].trim();
     let password = inputs[1].trim();
     if username == "admin" && password == "admin"{
@@ -64,4 +93,20 @@ fn login(inputs: Vec<String>)->bool{
         println!("failed");
         false
     }
+
+}
+
+fn login_staff(inputs: Vec<String>)->bool{
+    let username = inputs[0].trim();
+    let password = inputs[1].trim();
+    if username == "staff" && password == "staff"{
+        println!("success");
+        true
+    }
+    else{
+        println!("user: {} and pass: {} doesn't match.",username, password);
+        println!("failed");
+        false
+    }
+
 }

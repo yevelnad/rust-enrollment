@@ -14,28 +14,9 @@ impl <T> UserInput<T> {
        self.inputs
     }
 }
-pub struct Pages{}
+pub struct AdminPages{}
 
-impl Pages{
-    pub fn login()->UserInput<String>{
-        let mut user_input = Vec::new();
-        println!("++++++++++++++++++++++++++++++++");
-        println!("+  Please enter your username: +");
-        println!("++++++++++++++++++++++++++++++++");
-        let mut input = String::new();
-        io::stdin().read_line(&mut input).expect("Failed to read line");
-        user_input.push(input);
-        println!("++++++++++++++++++++++++++++++++");
-        println!("+ Please enter your password:  +");
-        println!("++++++++++++++++++++++++++++++++");
-        let mut input = String::new();
-        io::stdin().read_line(&mut input).expect("Failed to read line");
-        user_input.push(input);
-        let inputs = UserInput::new(user_input);
-        inputs
-        
-    }
-
+impl AdminPages{
     pub fn show_subjects(subject_list: &Vec<Subject>)->i32{
         if subject_list.is_empty(){
             println!("+++++++++++++++++++++++++++++++");
