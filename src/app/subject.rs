@@ -7,7 +7,7 @@ impl Subject{
         Subject { name: name, teacher: teacher }
     }
     pub fn name(&self)->String{
-        let name = self.teacher.trim();
+        let name = self.name.trim();
         name.to_string()
     }
     pub fn teacher(&self)->String{
@@ -18,13 +18,14 @@ impl Subject{
 }
 
 pub struct SubjectList{
-    subjects: Vec<Subject>
+   pub subjects: Vec<Subject>
 }
 impl SubjectList {
     pub fn new()->SubjectList{
         SubjectList{subjects: Vec::new()}
     }
-    pub fn subjects(&self)->Vec<Subject>{
-        self.subjects
+    pub fn add_subject(&mut self, subject: Subject)->&Self{
+        self.subjects.push(subject);
+        self
     }
 }

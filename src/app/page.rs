@@ -1,6 +1,7 @@
 use std::io;
 
-use crate::app::subject::Subjects;
+
+use super::subject::Subject;
 
 pub struct UserInput<T>{
     pub inputs: Vec<T>,
@@ -18,11 +19,15 @@ pub struct Pages{}
 impl Pages{
     pub fn login()->UserInput<String>{
         let mut user_input = Vec::new();
-        println!("username");
+        println!("++++++++++++++++++++++++++++++++");
+        println!("+  Please enter your username: +");
+        println!("++++++++++++++++++++++++++++++++");
         let mut input = String::new();
         io::stdin().read_line(&mut input).expect("Failed to read line");
         user_input.push(input);
-        println!("username");
+        println!("++++++++++++++++++++++++++++++++");
+        println!("+ Please enter your password:  +");
+        println!("++++++++++++++++++++++++++++++++");
         let mut input = String::new();
         io::stdin().read_line(&mut input).expect("Failed to read line");
         user_input.push(input);
@@ -31,30 +36,36 @@ impl Pages{
         
     }
 
-    pub fn show_subjects(subject_list: &Vec<Subjects>)->UserInput<i32>{
+    pub fn show_subjects(subject_list: &Vec<Subject>)->i32{
         if subject_list.is_empty(){
-            println!("The subjects are empty. Consider adding one by choosing 1");
+            println!("+++++++++++++++++++++++++++++++");
+            println!("The subjects are empty.");
+            println!("1. Enter 1 to add subjects")
         }else{
+            println!("+++++++++++++++++++++++++++++++");
+            println!("The current subjects are:");
             for subjects in subject_list{
                 println!("{}", subjects.name())
             }
+            println!("+++++++++++++++++++++++++++++++");
+            println!("1. Enter 1 to add subjects");
         }
-        let mut user_input = Vec::new();
-        user_input.push(3);
-
-        let input:UserInput<i32> = UserInput::new(user_input);
-        input
+        println!("2. Enter 2 to logout!");
+        let mut input = String::new();
+        io::stdin().read_line(&mut input).expect("Failed to read line");
+        let i32_input:i32 = input.trim().parse().unwrap_or_default();
+        i32_input
+       
     }
 
-    pub fn add_subjects()->Subjects{
+    pub fn add_subjects()->Subject{
         println!("name");
         let mut name = String::new();
         io::stdin().read_line(&mut name).expect("Failed to read line");
+        println!("teacher");
         let mut teacher = String::new();
         io::stdin().read_line(&mut teacher).expect("Failed to read line");
-        let mut time = String::new();
-        io::stdin().read_line(&mut time).expect("Failed to read line");
-        let subject = Subjects::new(name,teacher);
+        let subject = Subject::new(name,teacher);
         subject
     }
 }
