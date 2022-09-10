@@ -1,4 +1,10 @@
-use enrollment::app::{subject::SubjectList, adminpage::AdminPages, mainpage::MainPage};
+
+use enrollment::app::pages::staffpage::StaffPages;
+use enrollment::app::student::{StudentList, Student};
+use enrollment::app::subject::SubjectList;
+use enrollment::app::pages::{adminpage::AdminPages, mainpage::MainPage};
+
+
 
 
 
@@ -6,6 +12,7 @@ extern crate enrollment;
 
 fn main() {
     let mut subject_list = SubjectList::new();
+    let mut student_list = StudentList::new();
     let mut session = "main";
     loop{
         match session{
@@ -53,6 +60,28 @@ fn main() {
                 }
                 else{
                     println!("Wrong username or password");
+                }
+            },
+            "show students" => {
+                let user_input = StaffPages::show_students(&student_list.students);
+                match user_input {
+                    1 =>{
+                        println!("You have selected to add students");
+                        session = "add students";
+                    }
+                    2 => {
+                        println!("You have logout!!!!");
+                        session = "main";
+                    }
+                    _ => {
+                        println!("Wrong choice buddy!!");
+                    }
+                }
+            },
+            "add students" => {
+                let student = StaffPages::add_student();
+                if student.age().le(13){
+                    println!("This su")
                 }
             },
             "main" => {

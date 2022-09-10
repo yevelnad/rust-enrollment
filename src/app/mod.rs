@@ -1,3 +1,4 @@
-pub mod adminpage;
+pub mod pages;
 pub mod subject;
-pub mod mainpage;
+pub mod router;
+pub mod student;

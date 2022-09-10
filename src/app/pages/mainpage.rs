@@ -2,6 +2,8 @@ use std::io;
 
 use super::adminpage::UserInput;
 
+
+
 pub struct MainPage{}
 
 impl MainPage{

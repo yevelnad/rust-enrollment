@@ -1,7 +1,9 @@
 use std::io;
 
+use crate::app::subject::Subject;
 
-use super::subject::Subject;
+
+
 
 pub struct UserInput<T>{
     pub inputs: Vec<T>,

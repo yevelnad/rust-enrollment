@@ -11,8 +11,8 @@ impl Subject{
         name.to_string()
     }
     pub fn teacher(&self)->String{
-        let name = self.teacher.trim();
-        name.to_string()
+        let teacher = self.teacher.trim();
+        teacher.to_string()
     }
    
 }
