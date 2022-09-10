@@ -30,6 +30,7 @@ impl StaffPages{
         println!("Please add a name.");
         io::stdin().read_line(&mut input ).expect("Cant read the line");
         let student_name = input;
+        println!("Please add an age.");
         let mut input_age = String::new();
         io::stdin().read_line(&mut input_age).expect("cant read line");
         let age = input_age.trim().parse().unwrap_or(1);

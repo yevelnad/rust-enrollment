@@ -1,6 +1,6 @@
 
 use enrollment::app::pages::staffpage::StaffPages;
-use enrollment::app::student::{StudentList, Student};
+use enrollment::app::student::{StudentList};
 use enrollment::app::subject::SubjectList;
 use enrollment::app::pages::{adminpage::AdminPages, mainpage::MainPage};
 
@@ -80,8 +80,28 @@ fn main() {
             },
             "add students" => {
                 let student = StaffPages::add_student();
-                if student.age().le(13){
-                    println!("This su")
+                let age = student.age();
+                match age {
+                    1..=13 => {
+                        println!("This student seems very young. you can only enroll students with age 14-30.")
+                    },
+                    14..=30 =>{
+                        println!("This student is accepted ");
+                        student_list.add_student(student);
+                        session = "show students";
+                    },
+                    31..=99 => {
+                        println!("We don't accept student with age above 30");
+                    },
+                    200..=9999 =>{
+                        println!("You seems very old to be a human.");
+                        println!("We only accepts human");
+                        println!("But please teach me how to become an immortal");
+                    }
+                    _ => {
+                        println!("Something is not right. Only students with age 14 - 30 are accepted");
+                    }
+
                 }
             },
             "main" => {

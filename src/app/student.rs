@@ -23,8 +23,8 @@ impl StudentList {
     pub fn new()->StudentList{
         StudentList{students: Vec::new()}
     }
-    pub fn add_student(&mut self, subject: Student)->&Self{
-        self.students.push(subject);
+    pub fn add_student(&mut self, student: Student)->&Self{
+        self.students.push(student);
         self
     }
 }
