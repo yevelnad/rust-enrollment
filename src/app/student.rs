@@ -4,7 +4,7 @@ pub struct Student{
 }
 impl Student{
     pub fn new(name: String, age: u32)->Student{
-        Student { name: name, age: age }
+        Student {name,age }
     }
     pub fn name(&self)->&str{
         &self.name

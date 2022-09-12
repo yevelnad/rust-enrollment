@@ -1,7 +1,7 @@
 
 use enrollment::app::pages::staffpage::StaffPages;
-use enrollment::app::student::{StudentList};
-use enrollment::app::subject::SubjectList;
+use enrollment::app::student::{StudentList, Student};
+use enrollment::app::subject::{SubjectList, Subject};
 use enrollment::app::pages::{adminpage::AdminPages, mainpage::MainPage};
 
 extern crate enrollment;
@@ -26,9 +26,8 @@ fn main() {
             },
 
             "show subjects" => {
-                let user_input = AdminPages::show_subjects(&subject_list.subjects);
-                
-                match user_input {
+                let user_input = AdminPages::show_subjects(&subject_list.subjects).inputs();
+                match user_input[0] {
                     1 => {
                         println!("PLEASE ADD ONE SUBJECTS");
                         session = "add subject";
@@ -45,13 +44,15 @@ fn main() {
             },
 
             "add subject" => {
-                    let subject = AdminPages::add_subjects();
-                    subject_list.add_subject(subject);
+                    let subject = AdminPages::add_subjects().inputs();
+                    let name = &subject[0];
+                    let teacher = &subject[1];
+                    subject_list.add_subject(Subject::new(name.to_string(),teacher.to_string()));
                     session = "show subjects";
             },
             "staff login" => {
                 let user_input = MainPage::login().inputs();
-                if login_staff(user_input){
+                if login_staff(user_input.to_vec()){
                     session = "show students";
                 }
                 else{
@@ -59,8 +60,8 @@ fn main() {
                 }
             },
             "show students" => {
-                let user_input = StaffPages::show_students(&student_list.students);
-                match user_input {
+                let user_input = StaffPages::show_students(&student_list.students).inputs();
+                match user_input[0] {
                     1 =>{
                         println!("You have selected to add students");
                         session = "add students";
@@ -75,16 +76,23 @@ fn main() {
                 }
             },
             "add students" => {
-                let student = StaffPages::add_student();
-                let age = student.age();
-                match age {
+                let student = StaffPages::add_student().inputs();
+                let name = &student[0];
+                let age = student[1].trim().parse().unwrap_or(1);
+                match &age {
                     1..=13 => {
                         println!("This student seems very young. you can only enroll students with age 14-30.")
                     },
                     14..=30 =>{
-                        println!("This student is accepted ");
-                        student_list.add_student(student);
-                        session = "show students";
+                        if name.is_empty(){
+                            println!("The name seems empty");
+                        }
+                        else{
+                            println!("This student is accepted ");
+                            student_list.add_student(Student::new(name.to_string(),age));
+                            session = "show students";
+                        }
+                        
                     },
                     31..=99 => {
                         println!("We don't accept student with age above 30");
@@ -101,7 +109,7 @@ fn main() {
                 }
             },
             "main" => {
-                let user_input = MainPage::mainpage();
+                let user_input = MainPage::mainpage().inputs()[0];
                 match user_input{
                     1 => {
                         session = "admin login";

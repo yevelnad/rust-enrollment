@@ -1,9 +1,9 @@
-use crate::app::student::Student;
+use crate::app::{student::Student, userinput::UserInput};
 use std::io;
 pub struct StaffPages{}
 
 impl StaffPages{
-    pub fn show_students(student_list: &Vec<Student>)->i32{
+    pub fn show_students(student_list: &Vec<Student>)->UserInput<i32>{
         if student_list.is_empty(){
             println!("Seems you have empty list of students.");
             println!("1. Consider adding one by entering number 1.");
@@ -22,19 +22,20 @@ impl StaffPages{
 
         let mut input = String::new();
         io::stdin().read_line(&mut input).expect("Cant read line");
-        let user_input = input.trim().parse().unwrap_or(0);
+        let i32_input = input.trim().parse().unwrap_or(0);
+        let user_input = UserInput::new(vec![i32_input]);
         user_input
     }
-    pub fn add_student()->Student{
-        let mut input = String::new();
+    pub fn add_student()->UserInput<String>{
+        let mut name = String::new();
         println!("Please add a name.");
-        io::stdin().read_line(&mut input ).expect("Cant read the line");
-        let student_name = input;
+        io::stdin().read_line(&mut name ).expect("Cant read the line");
+        let mut age = String::new();
         println!("Please add an age.");
-        let mut input_age = String::new();
-        io::stdin().read_line(&mut input_age).expect("cant read line");
-        let age = input_age.trim().parse().unwrap_or(1);
-        let student = Student::new(student_name,age);
-        student
+        io::stdin().read_line(&mut age).expect("cant read line");
+        name = name.trim().to_string();
+        let user_input = UserInput::new(vec![name,age]);
+        user_input
+        
     }
 }
