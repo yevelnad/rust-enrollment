@@ -6,9 +6,8 @@ impl Student{
     pub fn new(name: String, age: u32)->Student{
         Student { name: name, age: age }
     }
-    pub fn name(&self)->String{
-        let name = self.name.trim();
-        name.to_string()
+    pub fn name(&self)->&str{
+        &self.name
     }
     pub fn age(&self)->u32{
         self.age

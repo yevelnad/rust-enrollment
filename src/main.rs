@@ -4,10 +4,6 @@ use enrollment::app::student::{StudentList};
 use enrollment::app::subject::SubjectList;
 use enrollment::app::pages::{adminpage::AdminPages, mainpage::MainPage};
 
-
-
-
-
 extern crate enrollment;
 
 fn main() {
